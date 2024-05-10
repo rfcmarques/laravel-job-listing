@@ -7,7 +7,12 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [JobController::class, 'index']);
+Route::controller(JobController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/jobs/create', 'create')->middleware('auth');
+    Route::post('/jobs', 'store')->middleware('auth');
+});
+
 
 Route::get('/search', SearchController::class);
 
